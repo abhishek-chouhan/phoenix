@@ -1223,6 +1223,9 @@ public class MutationState implements SQLCloseable {
         while (mapIter.hasNext()) {
             Entry<TableInfo, List<Mutation>> pair = mapIter.next();
             TableInfo tableInfo = pair.getKey();
+            if (tableInfo.isDataTable()) {
+                continue;
+            }
             PTable logicalTable = tableInfo.getPTable();
             if (tableInfo.getOrigTableRef().getTable().isImmutableRows()
                     && IndexUtil.isGlobalIndexCheckerEnabled(connection,
